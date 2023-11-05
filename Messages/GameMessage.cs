@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using NetLife;
 using UnityEngine;
 //#pragma warning disable 0414
 //idea for upgrade: this could be composite, made out of generic MessagePage or smth like it, whithin which would contain isSet states and other things if needed;
@@ -36,5 +37,29 @@ namespace GenericEventSystem {
         private bool intMessageSet;
         public int intMessage { get { return base.GetItem(ref _intMessage, transformSet); } }
         public GameMessage WithIntMessage(int value) => base.WithItem<int>(ref _intMessage, value, ref transformSet);
+
+        private Resource _resource;
+        private bool resourceSet;
+        public Resource resource { get { return base.GetItem(ref _resource, resourceSet); } }
+        public GameMessage WithResource(Resource value) => base.WithItem<Resource>(ref _resource, value, ref resourceSet);
+
+        private float _deltaFloat;
+        private bool deltaFloatSet;
+        public float deltaFloat { get { return base.GetItem(ref _deltaFloat, deltaFloatSet); } }
+        public GameMessage WithDeltaFloat(float value) => base.WithItem<float>(ref _deltaFloat, value, ref deltaFloatSet);
+
+        private List<MonoBehaviour> _monoRefsList;
+        private bool monoRefsListSet;
+        public List<MonoBehaviour> monoRefsList { get { return base.GetItem(ref _monoRefsList, monoRefsListSet); } }
+        public MonoBehaviour monoRef<T>() {
+            foreach (MonoBehaviour mono in monoRefsList) {
+                if (mono is T) {
+                    return mono;
+                }
+            };
+            //throw new Exception("No <" + typeof(T) + "> was not set in monoRefsList but was requested within GameMessage: " + (ToString()));
+            return null; //null is also a value, need it for de-assigning stuff;
+        }
+        public GameMessage WithMonoRefsList(List<MonoBehaviour> value) => base.WithItem<List<MonoBehaviour>>(ref _monoRefsList, value, ref monoRefsListSet);
     }
 }

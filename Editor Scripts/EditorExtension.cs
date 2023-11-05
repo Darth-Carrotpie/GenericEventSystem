@@ -7,7 +7,7 @@ namespace GenericEventSystem {
     public static class EditorExtension {
         public static int DrawBitMaskField(Rect aPosition, int aMask, System.Type aType, GUIContent aLabel) {
             var itemNames = System.Enum.GetNames(aType);
-            var itemValues = System.Enum.GetValues(aType)as int[];
+            var itemValues = System.Enum.GetValues(aType) as int[];
 
             int val = aMask;
             int maskVal = 0;
@@ -40,13 +40,21 @@ namespace GenericEventSystem {
             }
             return val;
         }
-        public static void AddArrayElement(this SerializedProperty prop, int elementValue) {
-            prop.arraySize++;
-            prop.GetArrayElementAtIndex(prop.arraySize - 1).intValue = elementValue;
+        public static void SetProperty(this Object obj, string propertyName, object value) {
+            SerializedObject so = new SerializedObject(obj);
+            var property = so.FindProperty(propertyName);
+            if (property == null) {
+                Debug.LogError($"Cannot find property {propertyName} in object: {obj.name}");
+                return;
+            }
+            so.Update();
+            property.SetValue(value);
+            EditorUtility.SetDirty(obj);
+            so.ApplyModifiedProperties();
         }
-        public static void AddArrayElement(this SerializedProperty prop, string elementValue) {
+        public static void AddArrayElement(this SerializedProperty prop, object elementValue) {
             prop.arraySize++;
-            prop.GetArrayElementAtIndex(prop.arraySize - 1).stringValue = elementValue;
+            prop.GetArrayElementAtIndex(prop.arraySize - 1).SetValue(elementValue);
         }
         public static void RemoveArrayElement(this SerializedProperty prop, int elementValue) {
             int toDel = 0;
@@ -56,6 +64,79 @@ namespace GenericEventSystem {
                 }
             }
             prop.DeleteArrayElementAtIndex(toDel);
+        }
+        public static void SetValue(this SerializedProperty p, object value) {
+            switch (p.propertyType) {
+                case SerializedPropertyType.Generic:
+                    Debug.LogWarning((object)
+                        "Get/Set of Generic SerializedProperty not supported");
+                    break;
+                case SerializedPropertyType.Integer:
+                    p.intValue = (int) value;
+                    break;
+                case SerializedPropertyType.Boolean:
+                    p.boolValue = (bool) value;
+                    break;
+                case SerializedPropertyType.Float:
+                    p.floatValue = (float) value;
+                    break;
+                case SerializedPropertyType.String:
+                    p.stringValue = (string) value;
+                    break;
+                case SerializedPropertyType.Color:
+                    p.colorValue = (Color) value;
+                    break;
+                case SerializedPropertyType.ObjectReference:
+                    p.objectReferenceValue = value as UnityEngine.Object;
+                    break;
+                case SerializedPropertyType.LayerMask:
+                    p.intValue = (int) value;
+                    break;
+                case SerializedPropertyType.Enum:
+                    p.enumValueIndex = (int) value;
+                    break;
+                case SerializedPropertyType.Vector2:
+                    p.vector2Value = (Vector2) value;
+                    break;
+                case SerializedPropertyType.Vector3:
+                    p.vector3Value = (Vector3) value;
+                    break;
+                case SerializedPropertyType.Vector4:
+                    p.vector4Value = (Vector4) value;
+                    break;
+                case SerializedPropertyType.Rect:
+                    p.rectValue = (Rect) value;
+                    break;
+                case SerializedPropertyType.ArraySize:
+                    p.intValue = (int) value;
+                    break;
+                case SerializedPropertyType.Character:
+                    p.stringValue = (string) value;
+                    break;
+                case SerializedPropertyType.AnimationCurve:
+                    p.animationCurveValue = value as AnimationCurve;
+                    break;
+                case SerializedPropertyType.Bounds:
+                    p.boundsValue = (Bounds) value;
+                    break;
+                case SerializedPropertyType.Gradient:
+                    Debug.LogWarning((object)
+                        "Get/Set of Gradient SerializedProperty not supported");
+                    break;
+                case SerializedPropertyType.Quaternion:
+                    p.quaternionValue = (Quaternion) value;
+                    break;
+            }
+        }
+        public static void PrintProperties(this SerializedProperty p, bool visitChildren) {
+            var report = new System.Text.StringBuilder();
+            report.AppendLine($"Object.name: {p.name})");
+            report.AppendLine($"Traversal result (visitChildren: {visitChildren})");
+            do {
+                report.AppendLine($"\tFound {p.propertyPath} (depth {p.depth})");
+            }
+            while (p.Next(visitChildren));
+            Debug.Log(report);
         }
     }
 

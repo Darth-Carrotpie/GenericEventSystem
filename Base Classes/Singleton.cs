@@ -11,7 +11,7 @@ namespace GenericEventSystem {
         private static readonly object Lock = new object();
 
         [SerializeField]
-        private bool _persistent = false;
+        protected bool _persistent = false;
         #endregion
 
         #region  Properties

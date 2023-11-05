@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class ExampleListenerOther : MonoBehaviour {
     void Start() {
-        EventCoordinator.StartListening(EventName.Input.Menus.ShowSettings(), OnShowSettings);
+        //EventCoordinator.StartListening(EventName.Input.Menus.ShowSettings(), OnShowSettings);
         //Can listen to the same event with any number of Listeners independently, they will all receive an identical Message
-        EventCoordinator.StartListening(EventName.UI.ScoreScreenShown(), OnScoreScreenShown);
+        //EventCoordinator.StartListening(EventName.UI.ScoreScreenShown(), OnScoreScreenShown);
     }
 
     void OnShowSettings(GameMessage msg) {

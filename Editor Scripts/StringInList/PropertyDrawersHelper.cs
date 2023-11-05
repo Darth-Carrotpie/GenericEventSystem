@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
+using NetLife;
 using UnityEditor;
 using UnityEngine;
-
 namespace GenericEventSystem {
   public static class PropertyDrawersHelper {
 
@@ -21,8 +21,14 @@ namespace GenericEventSystem {
     public static string[] AllEventNames() {
       return EventName.Get().ToArray();
     }
-    /*public static string[] AllPriceNames() {
-      return PriceName.Get().ToArray();
-    }*/
+    public static string[] AllResourcesNames() {
+      return ResourceName.Get().ToArray();
+    }
+    public static string[] AllUnlockTags() {
+      return UnlockTagNames.Get().ToArray();
+    }
+    public static string[] AllLinkTypesNames() {
+      return GraphLinkTypes.GetNames().ToArray();
+    }
   }
 }

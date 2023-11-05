@@ -9,11 +9,11 @@ using UnityEngine;
 //To off-load work into multiple frames of final tasks, you can run them in a Coroutine which you start within OnEventReceivedMethod
 public class ExampleListener : MonoBehaviour {
     void Start() {
-        EventCoordinator.StartListening(EventName.UI.ShowScoreScreen(), OnScoreShowReceived);
+        //EventCoordinator.StartListening(EventName.UI.ShowScoreScreen(), OnScoreShowReceived);
         //tip:
         //if unsure what triggers/listens the event, just select the whole event name chain (in this case - "EventName.UI.ShowScoreScreen()")
         //and to a ctrl+shift+F in VS Code to find all triggers throughout the project.
-        EventCoordinator.StartListening(EventName.UI.ScoreScreenShown(), OnScoreScreenShown);
+        //EventCoordinator.StartListening(EventName.UI.ScoreScreenShown(), OnScoreScreenShown);
     }
 
     void OnScoreShowReceived(GameMessage msg) {

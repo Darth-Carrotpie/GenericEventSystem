@@ -27,7 +27,12 @@ namespace GenericEventSystem {
                 attachmentsDictionary = new Dictionary<string, UnityGameEvent>();
             }
         }
-
+        protected override void OnAwake() {
+            if (!_persistent) {
+                eventDictionary = new Dictionary<string, UnityGameEvent>();
+                attachmentsDictionary = new Dictionary<string, UnityGameEvent>();
+            }
+        }
         public static void StartListening(string eventName, UnityAction<GameMessage> listener) {
             UnityGameEvent thisEvent = null;
             //Debug.Log("StartListening name: "+eventName);

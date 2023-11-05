@@ -3,18 +3,26 @@ using System.Linq;
 
 namespace GenericEventSystem {
     public class EventName {
-        //A few example event names. We arrange them in classes for convenience and make a Get() function to export into lists.
-        //String names that are returned must be unique, therefore a good convention is to attach a prefix of it's class for easier debugging.
-        public class UI {
-            public static string ShowScoreScreen() { return "UI_ShowScoreScreen"; }
-            public static string ScoreScreenShown() { return "UI_ScoreScreenShown"; }
-            public static List<string> Get() { return new List<string> { ShowScoreScreen(), ScoreScreenShown() }; }
+        public class Resources {
+            public static string Reserve() { return "Resources_Reserve"; }
+            public static string Add() { return "Resources_Add"; }
+            public static string Remove() { return "Resources_Remove"; }
+            public static string ResolveReserved() { return "Resources_ResolveReserved"; }
+            public static string ResolveDebt() { return "Resources_ResolveDebt"; }
+            public static string NotEnough() { return "Resources_NotEnough"; }
+            public static string Overflow() { return "Resources_Overflow"; }
+            public static List<string> Get() { return new List<string> { Reserve(), Add(), Remove(), ResolveReserved(), ResolveDebt(), NotEnough(), Overflow() }; }
         }
 
-        public class Network {
-            public static string PlayerJoined() { return "Network_PlayerJoined"; }
+        public class Node {
+            public static string AssignUnit() { return "Node_AssignUnit"; }
+            public static string Tick() { return "Network_PlayerLeft"; }
+            public static List<string> Get() { return new List<string> { AssignUnit(), Tick() }; }
+        }
+        public class World {
+            public static string Tick() { return "World_Tick"; }
             public static string PlayerLeft() { return "Network_PlayerLeft"; }
-            public static List<string> Get() { return new List<string> { PlayerJoined(), PlayerLeft() }; }
+            public static List<string> Get() { return new List<string> { Tick(), PlayerLeft() }; }
         }
         //this shows how message names can be nested for convenience into types
         public class Input {
@@ -29,7 +37,8 @@ namespace GenericEventSystem {
                 return new List<string> {
                         PlayersReady(),
                     }.Concat(Menus.Get())
-                    .Concat(Network.Get())
+                    .Concat(Node.Get())
+                    .Concat(World.Get())
                     .ToList();
             }
         }
@@ -44,7 +53,7 @@ namespace GenericEventSystem {
         }
         //This master Get() function returns all of the messages, thus enabling things like Editor extensions, i.e. the list picker/selector.
         public static List<string> Get() {
-            return new List<string> {}.Concat(UI.Get())
+            return new List<string> {}.Concat(Resources.Get())
                 .Concat(Editor.Get())
                 .Concat(Input.Get())
                 .Concat(AI.Get())

@@ -7,7 +7,7 @@ namespace GenericEventSystem {
     public class NameListDrawer : PropertyDrawer {
         private List<int> SelectedIndexed = new List<int>();
         void OnPointSelected(object index) {
-            var intIndex = (int)index;
+            var intIndex = (int) index;
 
             if (SelectedIndexed.Contains(intIndex)) {
                 SelectedIndexed.Remove(intIndex);
@@ -20,9 +20,9 @@ namespace GenericEventSystem {
             System.Text.StringBuilder selectedPointButtonSb = new System.Text.StringBuilder();
 
             if (SelectedIndexed.Count == 0) {
-                selectedPointButtonSb.Append("Select events to ignore.");
+                selectedPointButtonSb.Append($"Select values in mask for {property.name}.");
             } else {
-                selectedPointButtonSb.Append("Ignored:");
+                selectedPointButtonSb.Append(property.name + " Selected:");
                 foreach (int i in SelectedIndexed) {
                     selectedPointButtonSb.Append($"{i},");
                 }
@@ -45,6 +45,7 @@ namespace GenericEventSystem {
             SerializedProperty pIndexes = property.FindPropertyRelative("indexes");
             NameListAttribute attr = attribute as NameListAttribute;
             string[] fullList = attr.FullList;
+            //property.PrintProperties(true);
             //initial load data:
             int starter = 0;
             if (SelectedIndexed.Count == 0)

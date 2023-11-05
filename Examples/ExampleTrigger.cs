@@ -8,13 +8,13 @@ public class ExampleTrigger : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Space)) {
             string scoreMessageString = "You Win!";
             //This is how you trigger an event call. Be careful about the order, if you want other events to follow up use EventChain example of how they can be attached.
-            EventCoordinator.TriggerEvent(EventName.UI.ShowScoreScreen(), GameMessage.Write().WithStringMessage(scoreMessageString).WithTransform(transform).WithIntMessage(7));
+            //EventCoordinator.TriggerEvent(EventName.UI.ShowScoreScreen(), GameMessage.Write().WithStringMessage(scoreMessageString).WithTransform(transform).WithIntMessage(7));
         }
 
         //This trigger should throw an error, see more at example listener on Why
         if (Input.GetKeyDown(KeyCode.E)) {
             string scoreMessageString = "Error test!";
-            EventCoordinator.TriggerEvent(EventName.UI.ShowScoreScreen(), GameMessage.Write().WithStringMessage(scoreMessageString));
+            //EventCoordinator.TriggerEvent(EventName.UI.ShowScoreScreen(), GameMessage.Write().WithStringMessage(scoreMessageString));
         }
 
         //Send a list of custom objects

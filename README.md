@@ -7,8 +7,23 @@ If you are not familiar with a messaging design pattern, you can learn core conc
 
 ## Installing
 
+### Install: Manual
 - Git clone or fork this repo into your Unity project /Assets/Scripts/GenericEventSystem to add all messaging pattern implementation scripts.
 - Then add this folder to .gitignore to be able to separately pull on updates / fixes.
+
+### Install: Managed
+To import the package from GitHub, add it as a dependency in your Unity project’s Packages/manifest.json.
+
+1. Add Git URL to manifest.json: Open Packages/manifest.json in the target Unity project, and add your package under dependencies. For example:
+
+```
+{
+  "dependencies": {
+    "com.DarthCarrotPie.GenericEventSystem": "https://github.com/Darth-Carrotpie/GenericEventSystem.git#v1.0.2"
+  }
+}
+```
+2. Verify Installation: Unity should recognize the package and download it directly from the repository, making it available in the project’s Package Manager.
 
 ## Usage
 

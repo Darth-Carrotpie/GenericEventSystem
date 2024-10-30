@@ -1,0 +1,8 @@
+{
+    "name": "com.DarthCarrotPie.GenericEventSystem",
+    "version": "1.0.2",
+    "displayName": "Generic Event Message System",
+    "description": "This is a messaging pattern event system, slightly improved with a few quality of life thingies.",
+    "unity": "2022.3",
+    "dependencies": {}
+}
